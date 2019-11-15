@@ -1,64 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskI} from '../../models/task.interface';
-import { TodoService } from '../../services/todo.service';
+import { VentaService } from '../../services/ventas.service';
 import { ActivatedRoute} from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular';
 
 
 @Component({
-  selector: 'app-todo-details',
+  selector: 'app-venta-details',
   templateUrl: './todo-details.page.html',
   styleUrls: ['./todo-details.page.scss'],
 })
 export class TodoDetailsPage implements OnInit {
-  
-  todo: TaskI = {
-    task: '',
-    priority: 0
+
+  venta: TaskI = {
+    titulo: '',
+    cantidad: 0,
+    precio : 0,
+    tipo: '',
+    cliente: '',
+    fecha : '',
   };
 
-  todoId= null;
+  ventaId= null;
 
-  constructor(private route: ActivatedRoute, private nav: NavController, private todoService: TodoService, private loadingController: LoadingController) { }
+  constructor(private route: ActivatedRoute, private nav: NavController, private ventaService: VentaService, private loadingController: LoadingController) { }
 
   ngOnInit() {
-    this.todoId = this.route.snapshot.params['id'];
-    if (this.todoId){
-      this.loadTodo();
+    this.ventaId = this.route.snapshot.params['id'];
+    if (this.ventaId){
+      this.loadVenta();
     }
   }
 
-  async loadTodo(){
+  async loadVenta(){
     const loading = await this.loadingController.create({
-      message: 'Loading....'
+      message: 'Cargando....'
     });
     await loading.present();
 
-    this.todoService.getTodo(this.todoId).subscribe(todo => {
+    this.ventaService.getVenta(this.ventaId).subscribe(venta => {
       loading.dismiss();;
-      this.todo = todo;
+      this.venta = venta;
     });
   }
 
-  async saveTodo() {
+  async saveVenta() {
     const loading = await this.loadingController.create({
-      message: 'Saving....'
+      message: 'Guardando....'
     });
     await loading.present();
- 
-    if (this.todoId) {
-      this.todoService.updateTodo(this.todo, this.todoId).then(() => {
+
+    if (this.ventaId) {
+      this.ventaService.updateVenta(this.venta, this.ventaId).then(() => {
         loading.dismiss();
         this.nav.navigateForward('/');
       });
     } else {
-      this.todoService.addTodo(this.todo).then(() => {
+      this.ventaService.addVenta(this.venta).then(() => {
         loading.dismiss();
         this.nav.navigateForward('/');
       });
     }
   }
-  async onRemoveTodo(idTodo:string) {
-    this.todoService.removeTodo(idTodo);
+  async onRemoveVenta(idventa:string) {
+    this.ventaService.removeVenta(idventa);
   }
 }

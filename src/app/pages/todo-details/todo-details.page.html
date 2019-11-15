@@ -3,21 +3,47 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Details</ion-title>
+    <ion-title>Detalle producto</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
   <ion-list lines="full">
-    <ion-item *ngIf="todo">
-      <ion-input required type="text" placeholder="Task" [(ngModel)]="todo.task"></ion-input>
+    <ion-item >
+      <ion-label>Producto</ion-label>
+      <ion-input required type="text" placeholder="Producto" [(ngModel)]="venta.titulo"></ion-input>
     </ion-item>
-    <ion-item *ngIf="todo">
-      <ion-input required type="number" placeholder="Priority" [(ngModel)]="todo.priority"></ion-input>
+    <ion-item >
+       <ion-label>Precio</ion-label>
+      <ion-input required type="number" placeholder="Precio" [(ngModel)]="venta.precio"></ion-input>
+    </ion-item>
+    <ion-item >
+       <ion-label>Cantidad</ion-label>
+      <ion-input required type="number" placeholder="Cantidad" [(ngModel)]="venta.cantidad"></ion-input>
+    </ion-item>
+    <ion-item>
+       <ion-label>Tipo Acción</ion-label>
+      <ion-select placeholder="Tipo de Accion" [(ngModel)]="venta.tipo">
+        <ion-select-option value="Compra con boleta">Compra con boleta</ion-select-option>
+        <ion-select-option value="Compra con factura">Compra con factura</ion-select-option>
+        <ion-select-option value="Compra ">Compra </ion-select-option>
+        <ion-select-option value="Venta con boleta">Venta con boleta</ion-select-option>
+        <ion-select-option value="Venta con factura">Venta con factura</ion-select-option>
+        <ion-select-option value="Venta ">Venta</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item >
+       <ion-label>Cliente / Proveedor</ion-label>
+      <ion-input required type="text" placeholder="Cliente / Proveedor" [(ngModel)]="venta.cliente"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha</ion-label>
+      <ion-datetime displayFormat="DD MM YY" [(ngModel)]="venta.fecha" placeholder="Selecciona fecha"></ion-datetime>
     </ion-item>
   </ion-list>
-  <ion-button expand="full" (click)="saveTodo()">Save</ion-button>
+
+  <ion-button expand="full" (click)="saveVenta()">Guardar</ion-button>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-      <ion-fab-button color="danger" (click)="onRemoveTodo(todoId)" routerLink="/" routerDirection="forward">
+      <ion-fab-button color="danger" (click)="onRemoveVenta(todoId)" routerLink="/" routerDirection="forward">
           <ion-icon name="trash"></ion-icon>
       </ion-fab-button>
     </ion-fab>

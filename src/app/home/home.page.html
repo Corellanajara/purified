@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      Ionic Crud-Todos
+      Purified Registros
     </ion-title>
   </ion-toolbar>
 </ion-header>
  <ion-content>
   <ion-list>
-    <ng-container *ngIf="!todos || todos.length == 0">
+    <ng-container *ngIf="!ventas || ventas.length == 0">
       <div *ngFor="let n of [0,1,2]" padding>
         <ion-skeleton-text></ion-skeleton-text>
         <p>
@@ -15,25 +15,44 @@
         </p>
       </div>
     </ng-container>
-    <ion-item-sliding *ngFor="let todo of todos">
-      <ion-item lines="inset" button [routerLink]="['/details', todo.id]">
+    <ion-item-sliding *ngFor="let venta of ventas">
+      <ion-item lines="inset" button [routerLink]="['/details', venta.id]">
         <ion-label>
-          {{ todo.task }}
+          {{ venta.titulo }} X {{venta.cantidad}}
         </ion-label>
-        <ion-note slot="end" color="primary">{{ todo.priority }}</ion-note>
+        <ion-note slot="end" style="font-size:20px;" color="danger" *ngIf="venta.tipo.includes('ompra');">{{ venta.precio * venta.cantidad  | currency:'CLP' }}</ion-note>
+        <ion-note slot="end" style="font-size:20px;" color="primary" *ngIf="venta.tipo.includes('enta');">{{ venta.precio * venta.cantidad | currency:'CLP' }}</ion-note>
       </ion-item>
- 
+
       <ion-item-options side="end">
-        <ion-item-option (click)="remove(item)" color="secondary">
-          Check
-          <ion-icon name="checkmark" slot="end"></ion-icon>
+        <ion-item-option (click)="onRemoveVenta(venta.id)" color="danger">
+          Eliminar
+          <ion-icon name="close" slot="end"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/details" routerDirection="forward">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
  </ion-content>
+
+ <ion-footer>
+   <ion-toolbar>
+     <ion-row>
+       <ion-col >
+         <b>Gastos : {{gastos | currency:'CLP'}}</b>
+       </ion-col>
+       <ion-col >
+         <b>Ingresos: {{ingresos | currency:'CLP'}}</b>
+       </ion-col>
+       <ion-col >
+         <b>Resultado: {{ingresos - gastos | currency:'CLP'}}</b>
+       </ion-col>
+     </ion-row>
+   </ion-toolbar>
+ </ion-footer>

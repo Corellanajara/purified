@@ -1,5 +1,7 @@
 {
-  "name": "ionic-crud",
-  "integrations": {},
+  "name": "Purified sistema",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -1,5 +1,9 @@
 export interface TaskI {
     id?:string;
-    task: string;
-    priority: number;
+    titulo: string;
+    cantidad: number;
+    precio : number;
+    tipo: string;
+    fecha :string;
+    cliente: string;
 }

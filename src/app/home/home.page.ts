@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskI } from '../models/task.interface';
-import { TodoService } from '../services/todo.service';
+import { VentaService } from '../services/ventas.service';
 
 @Component({
   selector: 'app-home',
@@ -8,17 +8,28 @@ import { TodoService } from '../services/todo.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit{
-  todos: TaskI[];
+  ventas: TaskI[];
+  ingresos = 0;
+  gastos = 0;
+  constructor(private ventaService: VentaService){}
 
-  constructor(private todoService: TodoService){}
-  
   ngOnInit(){
-    this.todoService.getTodos().subscribe((todos) =>{
-      console.log('Todoss', todos);
-      this.todos = todos;
+    this.ventaService.getVentas().subscribe((ventas) =>{
+      console.log('ventass', ventas);
+      this.ventas = ventas;
+      for(let i = 0 ; i < ventas.length ;i ++){
+        let venta = ventas[i];
+        if(venta.tipo.includes('ompra') ){
+          this.gastos += (venta.precio * venta.cantidad)
+        }else{
+          this.ingresos += (venta.precio * venta.cantidad)
+        }
+      }
+
     })
   }
-  onRemove(idTask:string){
-    this.todoService.removeTodo(idTask);
+  async onRemoveVenta(idventa:string) {
+    this.ventaService.removeVenta(idventa);
   }
+  
 }
